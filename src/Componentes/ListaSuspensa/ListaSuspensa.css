@@ -1,0 +1,35 @@
+.lista-suspensa {
+  position: relative;
+}
+
+.lista-suspensa label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.lista-suspensa select {
+  background-color: #fff;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border: none;
+  font-size: 0.9rem;
+  height: 60px;
+  margin: 0.5rem 0;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.8rem;
+  color: #333;
+}
+
+.lista-suspensa::after {
+  content: "▼"; /* Ícone da flecha */
+  position: absolute;
+  right: 1rem; /* Ajuste a posição horizontal */
+  top: 65%;
+  font-size: 0.8rem;
+  transform: translateY(-50%);
+  color: #333;
+  pointer-events: none;
+}
