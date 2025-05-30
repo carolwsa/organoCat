@@ -8,17 +8,6 @@ import Botao from "../Botao";
 import { useState } from "react";
 
 const Formulario = (props) => {
-  const times = [
-    "",
-    "Programação",
-    "Front-End",
-    "Data Science",
-    "Devops",
-    "UX e Design",
-    "Mobile",
-    "Inovação e Gestão",
-  ];
-
   // "nome" é onde guardamos o valor do input, "setNome" é a função que atualiza esse valor
   const [nome, setNome] = useState("");
   const [cargo, setCargo] = useState("");
@@ -38,6 +27,11 @@ const Formulario = (props) => {
       imagem,
       time,
     });
+
+    setNome("");
+    setCargo("");
+    setImagem("");
+    setTime("");
   };
 
   return (
@@ -68,7 +62,7 @@ const Formulario = (props) => {
         />
         <ListaSuspensa
           obrigatorio={true}
-          itens={times}
+          itens={props.times}
           label="Time"
           valor={time}
           aoAlterar={(valor) => setTime(valor)}
