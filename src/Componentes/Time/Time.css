@@ -17,3 +17,8 @@
   margin-top: 2.1rem;
   flex-wrap: wrap;
 }
+
+p {
+  margin-top: 1rem;
+  font-weight: 500;
+}

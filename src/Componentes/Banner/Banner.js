@@ -5,7 +5,7 @@ function Banner() {
   return (
     //className == class em HTML;
     <header className="banner">
-      <img src="/images/banner.png" alt="Banner Principal" />
+      <img src="/images/banner2.png" alt="Banner Principal" />
     </header>
   );
 }
