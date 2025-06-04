@@ -33,3 +33,27 @@
   color: #333;
   pointer-events: none;
 }
+
+.lista-suspensa-button {
+  background-color: #6278f7;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.3rem;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  margin-top: -0.3rem;
+}
+
+.label-button {
+  display: flex;
+  justify-content: space-between;
+  max-width: 12%;
+  align-items: center;
+}
+
+.lista-suspensa-button:hover {
+  background-color: #33bf87;
+}

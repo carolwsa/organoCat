@@ -3,46 +3,49 @@ import Banner from "./Componentes/Banner/Banner.js";
 import Formulario from "./Componentes/Formulario/index.js";
 import Time from "./Componentes/Time/index.js";
 import Footer from "./Componentes/Footer/index.js";
+import { v4 as uuidv4 } from "uuid";
+import "./index.css";
 
 function App() {
   //trabalhando com a criação de uma lista de objetos
-  const times = [
+  //transformando o array de objetos em uma lista de times
+  const [times, setTimes] = useState([
     {
+      id: uuidv4(),
       nome: "Programação",
-      corPrimaria: "#57c278",
-      corSecundaria: "#d9f7e9",
+      cor: "#57c278",
     },
     {
+      id: uuidv4(),
       nome: "Front-End",
-      corPrimaria: "#82CFFA",
-      corSecundaria: "#E8F8FF",
+      cor: "#82CFFA",
     },
     {
+      id: uuidv4(),
       nome: "Data Science",
-      corPrimaria: "#A6D157",
-      corSecundaria: "#F0F8E2",
+      cor: "#A6D157",
     },
     {
+      id: uuidv4(),
       nome: "Devops",
-      corPrimaria: "#E06B69",
-      corSecundaria: "#FDE7E8",
+      cor: "#E06B69",
     },
     {
+      id: uuidv4(),
       nome: "UX e Design",
-      corPrimaria: "#DB6EBF",
-      corSecundaria: "#FAE9F5",
+      cor: "#DB6EBF",
     },
     {
+      id: uuidv4(),
       nome: "Mobile",
-      corPrimaria: "#FFBA05",
-      corSecundaria: "#FFF5D9",
+      cor: "#FFBA05",
     },
     {
+      id: uuidv4(),
       nome: "Inovação e Gestão",
-      corPrimaria: "#FF8A29",
-      corSecundaria: "#FFEEDF",
+      cor: "#FF8A29",
     },
-  ];
+  ]);
 
   //criação de uma lista de colaboradores através do hook useState
   //onde inicia com uma lista vazia "[]", uma variavel "colaboradores" que guarda os dados
@@ -65,14 +68,56 @@ function App() {
     //utiliza o setColaboradores para atualizar a lista de colaboradores
     //ele pega o antigo "colaboradores", "espalha" os dados com o operador spread "..."
     // e adiciona o novo colaborador que foi passado como argumento
-    setColaboradores([...colaboradores, colaborador]);
+    setColaboradores([...colaboradores, { ...colaborador, id: uuidv4() }]);
   };
+
+  function deletandoColaborador(id) {
+    if (window.confirm("Deseja deletar este colaborador?")) {
+      //se o usuário confirmar a exclusão, ele filtra a lista de colaboradores
+      setColaboradores(
+        colaboradores.filter((colaborador) => colaborador.id !== id)
+      );
+    }
+  }
+
+  //funcao para mudar a cor do time
+  //ela recebe a cor e o nome do time, e atualiza o estado "times"
+  //usando o método map para iterar sobre cada time
+  //se o nome do time for igual ao nome passado como argumento, ela atualiza a cor
+  //caso contrário, retorna o time sem alterações
+  //isso garante que apenas o time específico tenha sua cor alterada
+  function mudandoCorDoTime(cor, id) {
+    setTimes(
+      times.map((time) => {
+        if (time.id === id) {
+          time.cor = cor;
+        }
+        return time;
+      })
+    );
+  }
+
+  function favoritando(id) {
+    setColaboradores(
+      colaboradores.map((colaborador) => {
+        if (colaborador.id === id) {
+          return { ...colaborador, favorito: !colaborador.favorito };
+        }
+        return colaborador;
+      })
+    );
+  }
+
+  function cadastrarTime(novoTime) {
+    setTimes([...times, { ...novoTime, id: uuidv4() }]);
+  }
 
   return (
     <div className="App">
       {/*Importando os componentes*/}
       <Banner />
       <Formulario
+        cadastrarTime={cadastrarTime}
         times={times.map((time) => time.nome)}
         aoColaboradorCadastrado={(colaborador) => {
           aoAdicionarNovoColaborador(colaborador);
@@ -80,17 +125,20 @@ function App() {
       />
 
       {/*mapeando os times e adicionando seus atributos pelo .map*/}
-      {times.map((time) => {
+      {times.map((time, indice) => {
         return (
           <Time
-            key={time.nome}
+            mudarCor={mudandoCorDoTime}
+            key={indice}
             nome={time.nome}
-            corPrimaria={time.corPrimaria}
-            corSecundaria={time.corSecundaria}
+            time={time}
+            cor={time.cor}
+            //filtrando os colaboradores que pertencem ao time atual
             colaboradores={colaboradores.filter(
               (colaborador) => colaborador.time === time.nome
             )}
-            //filtrando os colaboradores que pertencem ao time atual
+            aoDeletar={deletandoColaborador}
+            aoFavoritar={favoritando}
           />
         );
       })}

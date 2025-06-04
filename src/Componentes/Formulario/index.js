@@ -1,5 +1,5 @@
 import "./Formulario.css";
-import CampoTexto from "../CampoTexto";
+import Campo from "../Campo";
 import ListaSuspensa from "../ListaSuspensa";
 import Botao from "../Botao";
 
@@ -13,6 +13,24 @@ const Formulario = (props) => {
   const [cargo, setCargo] = useState("");
   const [imagem, setImagem] = useState("");
   const [time, setTime] = useState("");
+  const [exibirFormulario, setExibirFormulario] = useState(false);
+
+  const [nomeTime, setnomeTime] = useState("");
+  const [corTime, setcorTime] = useState("");
+
+  const novoTime = (evento) => {
+    evento.preventDefault();
+    props.cadastrarTime({ nome: nomeTime, cor: corTime });
+
+    setnomeTime("");
+    setcorTime("");
+  };
+
+  const aoAdicionarTime = () => {
+    console.log("Abrindo formulário para adicionar time");
+    setExibirFormulario(true);
+    console.log(exibirFormulario); // Atualiza o estado para exibir o formulário
+  };
 
   const aoSalvar = (evento) => {
     evento.preventDefault();
@@ -38,7 +56,7 @@ const Formulario = (props) => {
     <section className="formulario">
       <form onSubmit={aoSalvar}>
         <h2>Preencha os dados para criar o card do Catlab</h2>
-        <CampoTexto
+        <Campo
           obrigatorio={true}
           label="Nome"
           placeholder="Digite seu nome"
@@ -47,14 +65,14 @@ const Formulario = (props) => {
           // aqui passa uma função para mudar o estado quando o input mudar
           aoAlterar={(valor) => setNome(valor)}
         />
-        <CampoTexto
+        <Campo
           obrigatorio={true}
           label="Cargo"
           placeholder="Digite seu cargo"
           valor={cargo}
           aoAlterar={(valor) => setCargo(valor)}
         />
-        <CampoTexto
+        <Campo
           label="Imagem"
           placeholder="Informe o endereço da imagem"
           valor={imagem}
@@ -66,8 +84,29 @@ const Formulario = (props) => {
           label="Time"
           valor={time}
           aoAlterar={(valor) => setTime(valor)}
+          aoAdicionar={aoAdicionarTime}
         />
         <Botao>Criar Card</Botao>
+      </form>
+
+      <form onSubmit={novoTime}>
+        <h2>Preencha os dados para criar um novo time</h2>
+        <Campo
+          obrigatorio={true}
+          label="Nome"
+          placeholder="Digite o nome do time"
+          valor={nomeTime}
+          aoAlterar={(valor) => setnomeTime(valor)}
+        />
+        <Campo
+          obrigatorio={true}
+          type="color"
+          label="Cor"
+          placeholder="Digite a cor do time"
+          valor={corTime}
+          aoAlterar={(valor) => setcorTime(valor)}
+        />
+        <Botao onClick={novoTime}>Criar novo time</Botao>
       </form>
     </section>
   );

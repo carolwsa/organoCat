@@ -1,4 +1,4 @@
-import "./CampoTexto.css";
+import "./Campo.css";
 
 const CampoTexto = (props) => {
   const aoDigitar = (evento) => {
@@ -6,7 +6,7 @@ const CampoTexto = (props) => {
   };
 
   return (
-    <div className="campo-texto">
+    <div className={`campo campo-${props.type}`}>
       <label>{props.label}</label>
       <input
         //"ouvindo" o valor digitado no input
@@ -14,6 +14,8 @@ const CampoTexto = (props) => {
         onChange={aoDigitar}
         required={props.obrigatorio}
         placeholder={props.placeholder}
+        //atribui o type o valor "text" por padrão caso não seja passado outro tipo
+        type={props.type || "text"}
       />
     </div>
   );

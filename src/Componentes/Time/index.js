@@ -1,34 +1,45 @@
 import Colaborador from "../Colaborador";
+import hexToRgba from "hex-to-rgba";
 import "./Time.css";
 
-const Time = (props) => {
+const Time = ({ colaboradores, aoDeletar, time, mudarCor, aoFavoritar }) => {
   return (
     //se a lista foi maior que 0, ele renderiza a seção do time
-    props.colaboradores.length > 0 ? (
+    colaboradores.length > 0 ? (
       <section
         className="time"
-        style={{ backgroundColor: props.corSecundaria }}
+        style={{ backgroundColor: hexToRgba(time.cor, "0.6") }}
       >
-        <h3 style={{ borderColor: props.corPrimaria }}>{props.nome}</h3>
+        <input
+          type="color"
+          className="input-cor"
+          value={time.cor}
+          onChange={(evento) => mudarCor(evento.target.value, time.id)}
+        />
+        <h3 style={{ borderColor: time.cor }}>{time.nome}</h3>
         <div className="colaboradores">
-          {props.colaboradores.map((colaborador) => (
-            <Colaborador
-              corDeFundo={props.corPrimaria}
-              key={colaborador.nome}
-              nome={colaborador.nome}
-              cargo={colaborador.cargo}
-              imagem={colaborador.imagem}
-            />
-          ))}
+          {colaboradores.map((colaborador) => {
+            // o parenteses permite um return de mais de uma linha
+            return (
+              <Colaborador
+                corDeFundo={time.cor}
+                key={colaborador.id}
+                id={colaborador.id}
+                nome={colaborador.nome}
+                cargo={colaborador.cargo}
+                imagem={colaborador.imagem}
+                aoDeletar={aoDeletar}
+                aoFavoritar={aoFavoritar}
+                favorito={colaborador.favorito}
+              />
+            );
+          })}
         </div>
       </section>
     ) : (
       //se a lista for igual a 0, ele não renderiza nada
-      <section
-        className="time"
-        style={{ backgroundColor: props.corSecundaria }}
-      >
-        <h3 style={{ borderColor: props.corPrimaria }}>{props.nome}</h3>
+      <section className="time" style={{ backgroundColor: time.cor }}>
+        <h3 style={{ borderColor: time.cor }}>{time.nome}</h3>
         <p>O time ainda não esta formado!</p>
       </section>
     )
