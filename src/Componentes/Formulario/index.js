@@ -13,7 +13,6 @@ const Formulario = (props) => {
   const [cargo, setCargo] = useState("");
   const [imagem, setImagem] = useState("");
   const [time, setTime] = useState("");
-  const [exibirFormulario, setExibirFormulario] = useState(false);
 
   const [nomeTime, setnomeTime] = useState("");
   const [corTime, setcorTime] = useState("");
@@ -24,12 +23,6 @@ const Formulario = (props) => {
 
     setnomeTime("");
     setcorTime("");
-  };
-
-  const aoAdicionarTime = () => {
-    console.log("Abrindo formulário para adicionar time");
-    setExibirFormulario(true);
-    console.log(exibirFormulario); // Atualiza o estado para exibir o formulário
   };
 
   const aoSalvar = (evento) => {
@@ -84,7 +77,6 @@ const Formulario = (props) => {
           label="Time"
           valor={time}
           aoAlterar={(valor) => setTime(valor)}
-          aoAdicionar={aoAdicionarTime}
         />
         <Botao>Criar Card</Botao>
       </form>

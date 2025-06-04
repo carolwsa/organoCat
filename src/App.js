@@ -5,6 +5,7 @@ import Time from "./Componentes/Time/index.js";
 import Footer from "./Componentes/Footer/index.js";
 import { v4 as uuidv4 } from "uuid";
 import "./index.css";
+import BotaoEsconder from "./Componentes/Botao-Esconder/index.js";
 
 function App() {
   //trabalhando com a criação de uma lista de objetos
@@ -51,6 +52,7 @@ function App() {
   //onde inicia com uma lista vazia "[]", uma variavel "colaboradores" que guarda os dados
   //e uma função "setColaboradores" que atualiza os dados dessa lista
   const [colaboradores, setColaboradores] = useState([]);
+  const [exibirformulario, setExibirFormulario] = useState(false);
 
   const aoAdicionarNovoColaborador = (colaborador) => {
     //aqui estamos recebendo o novo colaborador que foi adicionado no formulário
@@ -112,17 +114,32 @@ function App() {
     setTimes([...times, { ...novoTime, id: uuidv4() }]);
   }
 
+  function BotaoEsconde() {
+    if (!exibirformulario) {
+      setExibirFormulario(true);
+    } else {
+      setExibirFormulario(false);
+    }
+  }
+
   return (
     <div className="App">
       {/*Importando os componentes*/}
       <Banner />
-      <Formulario
-        cadastrarTime={cadastrarTime}
-        times={times.map((time) => time.nome)}
-        aoColaboradorCadastrado={(colaborador) => {
-          aoAdicionarNovoColaborador(colaborador);
-        }}
-      />
+      {exibirformulario && (
+        <Formulario
+          cadastrarTime={cadastrarTime}
+          times={times.map((time) => time.nome)}
+          aoColaboradorCadastrado={(colaborador) => {
+            aoAdicionarNovoColaborador(colaborador);
+          }}
+        />
+      )}
+
+      <div className="botao-esconde">
+        <h2 className="titulo">Minha organização</h2>
+        <BotaoEsconder aoClicar={BotaoEsconde} />
+      </div>
 
       {/*mapeando os times e adicionando seus atributos pelo .map*/}
       {times.map((time, indice) => {

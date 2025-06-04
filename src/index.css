@@ -17,3 +17,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4758bd;
+  font-family: monospace;
+  border-bottom: 4px solid #6278f7;
+  width: fit-content;
+  padding-bottom: 0.5rem;
+  margin: 2rem auto;
+}
+
+.botao-esconde {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+}

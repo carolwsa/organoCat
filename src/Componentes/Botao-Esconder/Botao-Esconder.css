@@ -1,0 +1,16 @@
+.botao-esconder {
+  background-color: #6278f7;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  padding: 0.6rem;
+  border: none;
+  color: #fff;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin: 0 8rem 0 -12rem;
+}
+
+.botao-esconder:hover {
+  background-color: #33bf87;
+}
