@@ -1,11 +1,15 @@
 import { useState } from "react";
-import Banner from "./Componentes/Banner/Banner.js";
-import Formulario from "./Componentes/Formulario/index.js";
-import Time from "./Componentes/Time/index.js";
-import Footer from "./Componentes/Footer/index.js";
+
 import { v4 as uuidv4 } from "uuid";
 import "./index.css";
-import BotaoEsconder from "./Componentes/Botao-Esconder/index.js";
+import { IColaborador } from "./Compartilhado/Interfaces/IColaborador";
+import { IColaborador_Form } from "./Compartilhado/Interfaces/IColaborador_Form";
+import { ITimes } from "./Compartilhado/Interfaces/ITimes";
+import Banner from "./Componentes/Banner";
+import Formulario from "./Componentes/Formulario";
+import BotaoEsconder from "./Componentes/Botao-Esconder";
+import Time from "./Componentes/Time";
+import Footer from "./Componentes/Footer";
 
 function App() {
   //trabalhando com a criação de uma lista de objetos
@@ -51,10 +55,10 @@ function App() {
   //criação de uma lista de colaboradores através do hook useState
   //onde inicia com uma lista vazia "[]", uma variavel "colaboradores" que guarda os dados
   //e uma função "setColaboradores" que atualiza os dados dessa lista
-  const [colaboradores, setColaboradores] = useState([]);
+  const [colaboradores, setColaboradores] = useState<IColaborador[]>([]);
   const [exibirformulario, setExibirFormulario] = useState(false);
 
-  const aoAdicionarNovoColaborador = (colaborador) => {
+  const aoAdicionarNovoColaborador = (colaborador: IColaborador_Form) => {
     //aqui estamos recebendo o novo colaborador que foi adicionado no formulário
     //e verificando se já existe um colaborador com o mesmo nome e cargo
     const existe = colaboradores.some(
@@ -73,7 +77,7 @@ function App() {
     setColaboradores([...colaboradores, { ...colaborador, id: uuidv4() }]);
   };
 
-  function deletandoColaborador(id) {
+  function deletandoColaborador(id: string) {
     if (window.confirm("Deseja deletar este colaborador?")) {
       //se o usuário confirmar a exclusão, ele filtra a lista de colaboradores
       setColaboradores(
@@ -88,7 +92,7 @@ function App() {
   //se o nome do time for igual ao nome passado como argumento, ela atualiza a cor
   //caso contrário, retorna o time sem alterações
   //isso garante que apenas o time específico tenha sua cor alterada
-  function mudandoCorDoTime(cor, id) {
+  function mudandoCorDoTime(cor: string, id: string) {
     setTimes(
       times.map((time) => {
         if (time.id === id) {
@@ -99,7 +103,7 @@ function App() {
     );
   }
 
-  function favoritando(id) {
+  function favoritando(id: string) {
     setColaboradores(
       colaboradores.map((colaborador) => {
         if (colaborador.id === id) {
@@ -110,7 +114,7 @@ function App() {
     );
   }
 
-  function cadastrarTime(novoTime) {
+  function cadastrarTime(novoTime: ITimes) {
     setTimes([...times, { ...novoTime, id: uuidv4() }]);
   }
 
@@ -125,7 +129,7 @@ function App() {
   return (
     <div className="App">
       {/*Importando os componentes*/}
-      <Banner />
+      <Banner enderecoImagem="/Images/banner2.png" />
       {exibirformulario && (
         <Formulario
           cadastrarTime={cadastrarTime}

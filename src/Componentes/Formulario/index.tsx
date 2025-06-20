@@ -1,13 +1,22 @@
 import "./Formulario.css";
-import Campo from "../Campo";
 import ListaSuspensa from "../ListaSuspensa";
 import Botao from "../Botao";
+import { v4 as uuidv4 } from "uuid";
 
 //ferramenta (hook) do React que serve para guardar e atualizar informações que podem mudar
 //durante a execução do componente
 import { useState } from "react";
+import { ITimes } from "../../Compartilhado/Interfaces/ITimes";
+import CampoTexto from "../Campo";
+import { IColaborador_Form } from "../../Compartilhado/Interfaces/IColaborador_Form";
 
-const Formulario = (props) => {
+interface FormularioProps {
+  cadastrarTime: (time: ITimes) => void;
+  aoColaboradorCadastrado: (colaborador: IColaborador_Form) => void;
+  times: string[];
+}
+
+const Formulario = (props: FormularioProps) => {
   // "nome" é onde guardamos o valor do input, "setNome" é a função que atualiza esse valor
   const [nome, setNome] = useState("");
   const [cargo, setCargo] = useState("");
@@ -17,15 +26,15 @@ const Formulario = (props) => {
   const [nomeTime, setnomeTime] = useState("");
   const [corTime, setcorTime] = useState("");
 
-  const novoTime = (evento) => {
+  const novoTime = (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault();
-    props.cadastrarTime({ nome: nomeTime, cor: corTime });
+    props.cadastrarTime({ nome: nomeTime, cor: corTime, id: uuidv4() });
 
     setnomeTime("");
     setcorTime("");
   };
 
-  const aoSalvar = (evento) => {
+  const aoSalvar = (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault();
 
     //aqui chamamos a função que foi passada como prop para o componente Formulario
@@ -49,27 +58,27 @@ const Formulario = (props) => {
     <section className="formulario">
       <form onSubmit={aoSalvar}>
         <h2>Preencha os dados para criar o card do Catlab</h2>
-        <Campo
+        <CampoTexto
           obrigatorio={true}
           label="Nome"
           placeholder="Digite seu nome"
           // aqui passa o valor atual para mostrar no input
           valor={nome}
           // aqui passa uma função para mudar o estado quando o input mudar
-          aoAlterar={(valor) => setNome(valor)}
+          aoAlterado={(valor) => setNome(valor)}
         />
-        <Campo
+        <CampoTexto
           obrigatorio={true}
           label="Cargo"
           placeholder="Digite seu cargo"
           valor={cargo}
-          aoAlterar={(valor) => setCargo(valor)}
+          aoAlterado={(valor) => setCargo(valor)}
         />
-        <Campo
+        <CampoTexto
           label="Imagem"
           placeholder="Informe o endereço da imagem"
           valor={imagem}
-          aoAlterar={(valor) => setImagem(valor)}
+          aoAlterado={(valor) => setImagem(valor)}
         />
         <ListaSuspensa
           obrigatorio={true}
@@ -78,27 +87,27 @@ const Formulario = (props) => {
           valor={time}
           aoAlterar={(valor) => setTime(valor)}
         />
-        <Botao>Criar Card</Botao>
+        <Botao children={"Criar Card"}></Botao>
       </form>
 
       <form onSubmit={novoTime}>
         <h2>Preencha os dados para criar um novo time</h2>
-        <Campo
+        <CampoTexto
           obrigatorio={true}
           label="Nome"
           placeholder="Digite o nome do time"
           valor={nomeTime}
-          aoAlterar={(valor) => setnomeTime(valor)}
+          aoAlterado={(valor) => setnomeTime(valor)}
         />
-        <Campo
+        <CampoTexto
           obrigatorio={true}
           type="color"
           label="Cor"
           placeholder="Digite a cor do time"
           valor={corTime}
-          aoAlterar={(valor) => setcorTime(valor)}
+          aoAlterado={(valor) => setcorTime(valor)}
         />
-        <Botao onClick={novoTime}>Criar novo time</Botao>
+        <Botao type="submit" children={"Criar novo time"}></Botao>
       </form>
     </section>
   );

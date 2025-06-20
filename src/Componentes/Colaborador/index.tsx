@@ -1,6 +1,17 @@
 import { IoIosCloseCircle, IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import "./Colaborador.css";
 
+interface ColaboradorProps {
+  nome: string;
+  imagem: string;
+  cargo: string;
+  corDeFundo: string;
+  favorito: boolean;
+  id: string;
+  aoDeletar: (id: string) => void;
+  aoFavoritar: (id: string) => void;
+}
+
 const Colaborador = ({
   nome,
   imagem,
@@ -10,7 +21,7 @@ const Colaborador = ({
   aoDeletar,
   aoFavoritar,
   favorito = false,
-}) => {
+}: ColaboradorProps) => {
   return (
     <div className="colaborador">
       <IoIosCloseCircle
